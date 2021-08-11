@@ -40,6 +40,18 @@ public class TicTacToeGame {
 		return playerChoice;
 	}
 
+	/**
+	 * This method is used to display the empty Tic Tac Toe board
+	 */
+	public static void showBoard() {
+		System.out.println("Tic Tac Toe Board");
+		System.out.println("| " + board[1] + " | " + board[2] + " | " + board[3] + " |");
+		System.out.println("|-----------|");
+		System.out.println("| " + board[4] + " | " + board[5] + " | " + board[6] + " |");
+		System.out.println("|-----------|");
+		System.out.println("| " + board[7] + " | " + board[8] + " | " + board[9] + " |");
+	}
+
 	public static void main(String[] args) {
 		System.out.println("Welcome to the Tic Tac Toe Game");
 		Scanner sc = new Scanner(System.in);
@@ -47,6 +59,7 @@ public class TicTacToeGame {
 		char choice = sc.next().charAt(0);
 		createBoard();
 		chooseOption(choice);
+		showBoard();
 		sc.close();
 	}
 }
