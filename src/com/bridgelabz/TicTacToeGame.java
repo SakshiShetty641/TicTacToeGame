@@ -113,15 +113,32 @@ public class TicTacToeGame {
 		showBoard();
 	}
 
+	/**
+	 * This method checks for free space for the computer to make the move
+	 */
+	static void Move() {
+		boolean played = false;
+		while (!played) {
+			int playMove = (int) (Math.random() * 10) % 9 + 1;
+			if (playMove > 0 && playMove < 10) {
+				if (board[playMove] == ' ') {
+					board[playMove] = computerChoice;
+					played = true;
+				}
+			}
+		}
+		showBoard();
+	}
+
 	public static void main(String[] args) {
 		System.out.println("Welcome to the Tic Tac Toe Game");
-
 		System.out.println("Choose an option X or O");
 		char choice = sc.next().charAt(0);
 		createBoard();
 		chooseOption(choice);
 		showBoard();
 		userPlay();
+		Move();
 		sc.close();
 	}
 }
