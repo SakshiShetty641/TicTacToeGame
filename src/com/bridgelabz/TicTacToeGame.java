@@ -15,6 +15,7 @@ public class TicTacToeGame {
 
 	/**
 	 * This method implements to create an empty TicTacToe board
+	 * 
 	 * @index This is used to initialize the index from 1 to 9
 	 * @return board This will return the board
 	 */
@@ -27,6 +28,7 @@ public class TicTacToeGame {
 
 	/**
 	 * This method allows user to choose X or O
+	 * 
 	 * @return playerChoice will return option selected by the player
 	 */
 	public static char chooseOption(char choice) {
@@ -116,7 +118,7 @@ public class TicTacToeGame {
 	/**
 	 * This method checks for free space for the computer to make the move
 	 */
-	static void Move() {
+	static void move() {
 		boolean played = false;
 		while (!played) {
 			int playMove = (int) (Math.random() * 10) % 9 + 1;
@@ -130,15 +132,32 @@ public class TicTacToeGame {
 		showBoard();
 	}
 
+	static void toss() {
+		int turn = (int) Math.floor(Math.random() * 10) % 2;
+		System.out.println("To start the game enter 1 to play the toss: ");
+		Scanner sc = new Scanner(System.in);
+		int playerToss = sc.nextInt();
+		if (playerToss == turn) {
+			System.out.println("Player won the toss, enter your first Move");
+			userPlay();
+			move();
+
+		} else {
+			System.out.println("Computer won the toss, enter your first move");
+			move();
+			userPlay();
+
+		}
+
+	}
+
 	public static void main(String[] args) {
 		System.out.println("Welcome to the Tic Tac Toe Game");
-		System.out.println("Choose an option X or O");
+		System.out.println("Player choose an option X or O");
 		char choice = sc.next().charAt(0);
 		createBoard();
 		chooseOption(choice);
-		showBoard();
-		userPlay();
-		Move();
+		toss();
 		sc.close();
 	}
 }
