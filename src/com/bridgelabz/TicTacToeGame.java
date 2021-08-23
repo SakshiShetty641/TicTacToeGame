@@ -1,5 +1,6 @@
 package com.bridgelabz;
 import java.util.Scanner;
+import java.util.Locale;
 /**
  * Purpose - To simulate a Tic Tac Toe Game
  * @author Sakshi Shetty
@@ -289,10 +290,27 @@ public class TicTacToeGame {
 		public static void main(String[] args) {
 			// displaying welcome message
 			System.out.println("Welcome to Tic Tac Toe Game");
-			// game board created
-			createBoard();
-			userPlay();
-			showBoard();
-			playTillEnd(playerChoice, board, computerChoice);
+			boolean playAgain = false;
+			Scanner sc = new Scanner(System.in);
+			do {
+				createBoard();
+				userPlay();
+				showBoard();
+				playTillEnd(playerChoice, board, computerChoice);
+				System.out.println("Do you want to continue?");
+				System.out.println("Press y for Yes, n for No");
+				char choice = sc.next().toLowerCase(Locale.ROOT).charAt(0);
+				switch (choice) {
+				case 'n':
+					playAgain = false;
+					break;
+				case 'y':
+					playAgain = true;
+					break;
+				default:
+					System.out.println("Incorrect Input");
+					break;
+				}
+			} while (playAgain);
 		}
 	}
