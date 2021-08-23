@@ -15,7 +15,6 @@ public class TicTacToeGame {
 
 	/**
 	 * This method implements to create an empty TicTacToe board
-	 * 
 	 * @index This is used to initialize the index from 1 to 9
 	 * @return board This will return the board
 	 */
@@ -131,8 +130,10 @@ public class TicTacToeGame {
 		}
 		showBoard();
 	}
+
 	/**
-	 * This method implements toss to assign accordingly whether the player or computer starts the game 
+	 * This method implements toss to assign accordingly whether the player or
+	 * computer starts the game
 	 */
 
 	static void toss() {
@@ -153,59 +154,85 @@ public class TicTacToeGame {
 		}
 
 	}
-	
-    public static char playerWon(char[] board){
-        int[][] game = {{1,2,3},{4,5,6},{7,8,9},{1,5,9},{3,5,7},{1,4,7},{2,5,8},{3,6,9}};
-        char won = 'W';
-        for(int i=0;i<game.length;i++){
-            if(board[game[i][0]] == board[game[i][1]] && board[game[i][1]] == board[game[i][2]]){
-                if(board[game[i][0]]!=' '){
-                    won = board[game[i][0]];
-                    break;
-                }
-            }
-        }
-        return won;
-    }
-    // method to check for empty spaces on game board
-    public static boolean isBoardFilled(char[] board){
-        boolean filled = true;
-        for(int i=1;i<board.length;i++){
-            if(board[i]==' '){
-                filled = false;
-                break;
-            }
-        }
-        return filled;
-    }
-    // method to check game state
-    public static char getGameState(char[] board,char user,char computer,char current) {
-        char won = playerWon(board);
-        char tie = ' ', state = ' ';
-        if (current == user) {
-            tie = computer;
-        } else {
-            tie = user;
-        }
-        switch (won) {
-            case 'F':
-                state = tie;
-                break;
-            case 'X':
-                System.out.println("X has won the game");
-                state = 'E';
-                break;
-            case 'O':
-                System.out.println("O has won the game");
-                state = 'E';
-                break;
-        }
-        if (isBoardFilled(board)) {
-            state = 'E';
-        }
-        return state;
-    }
 
+	public static char playerWon(char[] board) {
+		int[][] game = { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 }, { 1, 5, 9 }, { 3, 5, 7 }, { 1, 4, 7 }, { 2, 5, 8 },
+				{ 3, 6, 9 } };
+		char won = 'W';
+		for (int i = 0; i < game.length; i++) {
+			if (board[game[i][0]] == board[game[i][1]] && board[game[i][1]] == board[game[i][2]]) {
+				if (board[game[i][0]] != ' ') {
+					won = board[game[i][0]];
+					break;
+				}
+			}
+		}
+		return won;
+	}
+
+	// method to check for empty spaces on game board
+	public static boolean isBoardFilled(char[] board) {
+		boolean filled = true;
+		for (int i = 1; i < board.length; i++) {
+			if (board[i] == ' ') {
+				filled = false;
+				break;
+			}
+		}
+		return filled;
+	}
+
+	// method to check game state
+	public static char getGameState(char[] board, char user, char computer, char current) {
+		char won = playerWon(board);
+		char tie = ' ', state = ' ';
+		if (current == user) {
+			tie = computer;
+		} else {
+			tie = user;
+		}
+		switch (won) {
+		case 'F':
+			state = tie;
+			break;
+		case 'X':
+			System.out.println("X has won the game");
+			state = 'E';
+			break;
+		case 'O':
+			System.out.println("O has won the game");
+			state = 'E';
+			break;
+		}
+		if (isBoardFilled(board)) {
+			state = 'E';
+		}
+		return state;
+	}
+
+	public static int winningPosition(char userChoice, char[] board) {
+		int[][] game = { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 }, { 1, 5, 9 }, { 3, 5, 7 }, { 1, 4, 7 }, { 2, 5, 8 },
+				{ 3, 6, 9 } };
+		int place = -1;
+		for (int i = 0; i < game.length; i++) {
+			if (board[game[i][0]] == userChoice && board[game[i][0]] == board[game[i][1]] && board[game[i][2]] == ' ') {
+				if (board[game[i][0]] != ' ') {
+					place = game[i][2];
+				}
+			}
+			if (board[game[i][0]] == userChoice && board[game[i][0]] == board[game[i][2]] && board[game[i][1]] == ' ') {
+				if (board[game[i][0]] != ' ') {
+					place = game[i][1];
+				}
+			}
+			if (board[game[i][1]] == userChoice && board[game[i][1]] == board[game[i][2]] && board[game[i][0]] == ' ') {
+				if (board[game[i][1]] != ' ') {
+					place = game[i][0];
+				}
+			}
+		}
+		return place;
+	}
 
 	public static void main(String[] args) {
 		System.out.println("Welcome to the Tic Tac Toe Game");
@@ -213,8 +240,18 @@ public class TicTacToeGame {
 		char choice = sc.next().charAt(0);
 		createBoard();
 		chooseOption(choice);
-		toss();
-		playerWon(board);
-		sc.close();
+		showBoard();
+
+		char gameState = choice;
+		while (gameState != 'E') {
+			if (gameState == playerChoice) {
+				userPlay();
+				gameState = getGameState(board, playerChoice, computerChoice, gameState);
+			}
+			if (gameState == computerChoice) {
+				move();
+				gameState = getGameState(board, playerChoice, computerChoice, gameState);
+			}
+		}
 	}
 }
