@@ -27,6 +27,7 @@ public class TicTacToeGame {
 
 	/**
 	 * This method allows user to choose X or O
+	 * 
 	 * @return playerChoice will return option selected by the player
 	 */
 	public static char chooseOption(char choice) {
@@ -234,15 +235,20 @@ public class TicTacToeGame {
 	}
 
 	static void computerSmartPlay() {
+		int[] border = { 1, 3, 7, 9 };
 		int placeWin = winningPosition(computerChoice, board);
 		int losing = winningPosition(playerChoice, board);
-		boolean placed = false;
 		if (losing != -1) {
 			board[losing] = computerChoice;
-			placed = true;
 		} else if (placeWin != -1) {
 			board[placeWin] = computerChoice;
-			placed = true;
+		} else if (losing == -1 && placeWin == -1) {
+			for (int i = 0; i < border.length; i++) {
+				if (board[border[i]] == ' ') {
+					board[border[i]] = computerChoice;
+					break;
+				}
+			}
 		} else {
 			boolean played = false;
 			while (!played) {
