@@ -27,7 +27,6 @@ public class TicTacToeGame {
 
 	/**
 	 * This method allows user to choose X or O
-	 * 
 	 * @return playerChoice will return option selected by the player
 	 */
 	public static char chooseOption(char choice) {
@@ -234,6 +233,31 @@ public class TicTacToeGame {
 		return place;
 	}
 
+	static void computerSmartPlay() {
+		int placeWin = winningPosition(computerChoice, board);
+		int losing = winningPosition(playerChoice, board);
+		boolean placed = false;
+		if (losing != -1) {
+			board[losing] = computerChoice;
+			placed = true;
+		} else if (placeWin != -1) {
+			board[placeWin] = computerChoice;
+			placed = true;
+		} else {
+			boolean played = false;
+			while (!played) {
+				int playMove = (int) (Math.random() * 10) % 9 + 1;
+				if (playMove > 0 && playMove < 10) {
+					if (board[playMove] == ' ') {
+						board[playMove] = computerChoice;
+						played = true;
+					}
+				}
+			}
+		}
+		showBoard();
+	}
+
 	public static void main(String[] args) {
 		System.out.println("Welcome to the Tic Tac Toe Game");
 		System.out.println("Player choose an option X or O");
@@ -241,7 +265,6 @@ public class TicTacToeGame {
 		createBoard();
 		chooseOption(choice);
 		showBoard();
-
 		char gameState = choice;
 		while (gameState != 'E') {
 			if (gameState == playerChoice) {
