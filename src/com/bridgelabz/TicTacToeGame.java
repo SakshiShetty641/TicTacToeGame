@@ -235,34 +235,36 @@ public class TicTacToeGame {
 	}
 
 	static void computerSmartPlay() {
-		int[] border = { 1, 3, 7, 9 };
-		int placeWin = winningPosition(computerChoice, board);
-		int losing = winningPosition(playerChoice, board);
-		if (losing != -1) {
-			board[losing] = computerChoice;
-		} else if (placeWin != -1) {
-			board[placeWin] = computerChoice;
-		} else if (losing == -1 && placeWin == -1) {
-			for (int i = 0; i < border.length; i++) {
-				if (board[border[i]] == ' ') {
-					board[border[i]] = computerChoice;
-					break;
-				}
-			}
-		} else {
-			boolean played = false;
-			while (!played) {
-				int playMove = (int) (Math.random() * 10) % 9 + 1;
-				if (playMove > 0 && playMove < 10) {
-					if (board[playMove] == ' ') {
-						board[playMove] = computerChoice;
-						played = true;
-					}
-				}
-			}
-		}
-		showBoard();
-	}
+		 int[] border = {1, 3, 7, 9};
+	        int[] center = {2, 4, 6, 8};
+	        int placeWin = winningPosition(computerChoice, board);
+	        int losing = winningPosition(playerChoice, board);
+	        if (losing != -1) {
+	            board[losing] = computerChoice;
+	        } else if (placeWin != -1) {
+	            board[placeWin] = computerChoice;
+	        } else if (losing == -1 && placeWin == -1) {
+	            for (int i = 0; i < border.length; i++) {
+	                if (board[border[i]] == ' ') {
+	                    board[border[i]] = computerChoice;
+	                    break;
+	                }
+	            }
+	        }
+	        else{
+	            if(board[5]==' '){
+	                board[5]=computerChoice;
+	            }else{
+	                for(int i=0;i<center.length;i++){
+	                    if(board[center[i]] == ' '){
+	                        board[center[i]]=computerChoice;
+	                        break;
+	                    }
+	                }
+	            }
+	        }
+	        showBoard();
+	    }
 
 	public static void main(String[] args) {
 		System.out.println("Welcome to the Tic Tac Toe Game");
