@@ -266,23 +266,33 @@ public class TicTacToeGame {
 	        showBoard();
 	    }
 
-	public static void main(String[] args) {
-		System.out.println("Welcome to the Tic Tac Toe Game");
-		System.out.println("Player choose an option X or O");
-		char choice = sc.next().charAt(0);
-		createBoard();
-		chooseOption(choice);
-		showBoard();
-		char gameState = choice;
-		while (gameState != 'E') {
-			if (gameState == playerChoice) {
-				userPlay();
-				gameState = getGameState(board, playerChoice, computerChoice, gameState);
+		public static void playTillEnd(char playerLetter, char[] board, char computerLetter) {
+			char start = playerChoice;
+			if (start == playerLetter) {
+				System.out.println("Player wins coin toss, start first");
+			} else {
+				System.out.println("Player loses coin toss, computer starts first");
 			}
-			if (gameState == computerChoice) {
-				move();
-				gameState = getGameState(board, playerChoice, computerChoice, gameState);
+			char gameState = start;
+			while (gameState != 'E') {
+				if (gameState == playerLetter) {
+					userPlay();
+					gameState = getGameState(board, playerLetter, computerLetter, gameState);
+				}
+				if (gameState == computerLetter) {
+					move();
+					gameState = getGameState(board, playerLetter, computerLetter, gameState);
+				}
 			}
 		}
+
+		public static void main(String[] args) {
+			// displaying welcome message
+			System.out.println("Welcome to Tic Tac Toe Game");
+			// game board created
+			createBoard();
+			userPlay();
+			showBoard();
+			playTillEnd(playerChoice, board, computerChoice);
+		}
 	}
-}
